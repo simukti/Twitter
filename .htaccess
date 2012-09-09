@@ -1,0 +1,15 @@
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+RewriteBase /
+Options -Indexes -MultiViews
+
+RewriteCond %{REQUEST_URI} ^\/(src)\/.*$
+RewriteRule ^(.*)$ /index.php [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/index\.php [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^\/(assets)\/.*$
+RewriteRule ^(.*)$ - [NC,L]
+RewriteRule ^(.*)$ index.php [NC,L]
