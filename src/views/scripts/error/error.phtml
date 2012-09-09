@@ -1,0 +1,17 @@
+<div class="container_16 section clearfix">
+    <div class="grid_10 prefix_3">
+        <div class="box">
+            <h2 class="box_title"><i class="icon-lock"></i> (Invalid Request)</h2>
+            <p class="tweet_content">
+                There is something wrong with this request, <strong>"<?php echo $this->message;?>"</strong>.<br /><br />
+                You can go back to <a href="<?php echo $this->url(array(), 'index-timeline');?>"> Your Timeline</a> or <a href="<?php echo $this->url(array(), 'index-index');?>">Front Page</a>.
+            </p>
+            <?php if($this->exception) : ?>
+                <?php if ($this->request->getParams()) : ?>
+                    <span style="font-weight: bold;">Params &rarr;</span> 
+                    <pre><?php echo var_export($this->request->getParams(), true); ?></pre>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

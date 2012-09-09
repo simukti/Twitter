@@ -1,0 +1,48 @@
+<?php if(count($this->dm)) : ?>
+<?php echo $this->render('_dmPagination.phtml'); ?>
+
+<div class="container_16 clearfix">
+    <?php foreach($this->dm as $message) : ?>
+    <?php $sender = $message->sender; $recipient = $message->recipient; ?>
+    <div class="grid_4">
+        <div class="box_tweet" id="<?php echo $message->id; ?>">
+                <h2 class="box_title" style="font-size: 110%;">Sender</h2>
+                <?php echo $this->profPict($sender->profile_image_url, $sender->screen_name); ?>
+                <ul class="tweet_detail">
+                    <li><a href="<?php echo $this->url(array('screen_name' => $sender->screen_name), 'index-show_user');?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $sender->name, $sender->screen_name)?></a></li>
+                    <li><i class="icon-calendar"></i> <?php echo date("j/M/Y h:m A", strtotime($message->created_at)); ?></li>
+                    
+                    <?php if($this->url() !== $this->url(array(), 'dm-sent')) : ?>
+                    <li><i class="icon-share"></i> <a href="<?php echo $this->url(array('id_user' => $message->sender_id), 'dm-write');?>"> Reply This Message</a></li>
+                    <?php endif; ?>
+                </ul>
+                <div class="clearfix"></div>
+                
+                <p class="tweet_content"><?php echo $this->tweetFilter($message->text); ?></p>
+                
+                <div class="clearfix"></div>
+                <h2 class="box_title" style="font-size: 110%;">Recipient</h2>
+
+                <ul class="tweet_detail">
+                    <li><a href="<?php echo $this->url(array('screen_name' => $recipient->screen_name), 'index-show_user');?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $recipient->name, $recipient->screen_name)?></a></li>
+                    <li><i class="icon-trash"></i> <a href="<?php echo $this->url(array('id' => $message->id), 'dm-delete');?>"> <span style="color: red;">Delete This Message</span></a></li>
+                </ul>
+                
+            </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<?php echo $this->render('_dmPagination.phtml'); ?>
+
+<?php else: ?>
+
+<div class="container_16 section clearfix">
+    <div class="grid_16">
+        <div class="box">
+            <?php echo sprintf("<h2 class=\"box_title\">Entity on %s not found.</h2>", $this->url()); ?>
+        </div>
+    </div>
+</div>
+
+<?php endif;?>

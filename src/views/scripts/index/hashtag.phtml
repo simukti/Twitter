@@ -1,0 +1,32 @@
+<div class="container_16 section clearfix">
+<?php if(count($this->json_response['results'])) : ?>
+    <div class="grid_16">
+        <div class="box">
+            <?php echo sprintf("<h2 class=\"box_title\">Hashtag search : '#%s'</h2>", $this->tag); ?>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <?php foreach($this->json_response['results'] as $user) : ?>
+    
+    <div class="grid_4">
+        <div class="box fixed_280" id="<?php echo $user['id_str']; ?>">
+            <?php echo $this->profPict($user['profile_image_url'], $user['from_user']);?>
+            
+            <?php echo $this->tweetDetail($user['from_user_name'], $user['from_user'], $user['created_at'], html_entity_decode($user['source'])); ?>
+            
+            <div class="clearfix"></div>
+
+            <p class="tweet_content"><?php echo $this->tweetFilter($user['text']); ?></p>
+        </div>
+    </div>
+    
+    <?php endforeach; ?>
+    
+<?php else: ?>
+    <div class="grid_16">
+        <div class="box">
+            <?php echo sprintf("<h2 class=\"box_title\">Hashtag '#%s' not found.</h2>", $this->tag); ?>
+        </div>
+    </div>
+<?php endif; ?>
+</div>

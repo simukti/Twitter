@@ -1,0 +1,43 @@
+<?php $user = $this->user; ?>
+
+<div class="container_16 section clearfix">
+    <?php echo $this->render('_userDetail.phtml'); ?>
+    
+    <div class="grid_12">
+        <div class="pagination">
+            <ul>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user'); ?>"><i class="icon-edit"></i> Write A Tweet</a></li>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_tweets'); ?>"><i class="icon-check"></i> Their Tweets</a></li>
+                <li class="active"><a href="#"><i class="icon-eye-open"></i> Their Friends</a></li>
+                
+                <?php if((int) $user->favourites_count) : ?>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_faves'); ?>"><i class="icon-heart"></i> Their Favourites</a></li>
+                <?php endif;?>
+            </ul>
+        </div>
+        
+        <?php foreach ($this->friends as $me): ?>
+
+        <div class="grid_4 omega">
+            <div class="box" id="<?php echo $me->id; ?>" style="height:150px;">
+                <?php echo $this->profPict($me->profile_image_url, $me->screen_name); ?>
+
+                <ul class="tweet_detail">
+                    <li><a href="<?php echo $this->url(array('screen_name' => $me->screen_name), 'index-show_user');?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $me->name, $me->screen_name)?></a></li>
+                    <li><i class="icon-calendar"></i> Join <?php echo date("j/M/Y", strtotime($me->created_at)); ?></li>
+                    <li><i class="icon-list-alt"></i> <strong><?php echo $me->followers_count; ?></strong> followers</li>
+                    <li><i class="icon-tag"></i> <?php echo $me->friends_count; ?> friends</li>
+                </ul>
+                <div class="clearfix"></div>
+
+                <ul class="tweet_menu">
+                    <li><i class="icon-check"></i> <?php echo $me->statuses_count; ?> tweets</li>
+                    <li><i class="icon-heart"></i> <?php echo $me->favourites_count; ?> favs</li>
+                </ul>
+            </div>
+        </div>
+
+        <?php endforeach; ?>
+        
+    </div>
+</div>

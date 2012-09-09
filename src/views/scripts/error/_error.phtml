@@ -1,0 +1,26 @@
+<div class="container_16 section clearfix">
+    <div class="grid_16">
+        <div class="box">
+            <?php if (isset($this->exception)): ?>
+                <span style="font-weight: bold;">Error &rarr;</span> 
+                <?php echo $this->exception->getMessage(); ?> <br />
+                <?php if ($this->request->getParams()) : ?>
+                    <span style="font-weight: bold;">Params &rarr;</span> 
+                    <pre><?php echo var_export($this->request->getParams(), true); ?></pre>
+                <?php endif; ?>
+                <span style="font-weight: bold;">Script Rundown &rarr;</span><br />
+
+                <?php $fileTrace = $this->exception->getTrace(); sort($fileTrace, SORT_DESC); ?>
+                <?php foreach ($fileTrace as $key => $trace) : ?>
+                <?php 
+                    $file = $trace['file'];
+                    $line = $trace['line'];
+                    $function = $trace['function'];
+
+                    echo sprintf("%s &rarr; <strong>Line</strong>: %s &rarr; <strong>Function</strong>: %s() &rarr; <strong>File</strong>: %s<br />", $key, $line, $function, $file);
+                ?>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </div>
+    </div>
+</div>

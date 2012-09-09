@@ -1,0 +1,9 @@
+<?php
+return array(
+    'app_name'          => '', // Application Name
+    'consumer_key'      => '', // Consumer Key
+    'consumer_secret'   => '', // Consumer Secret
+    
+    'display_retweet'   => 1,
+    'fetch_per_request' => 40
+);

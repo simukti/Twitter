@@ -1,0 +1,25 @@
+<?php $user = $this->user; ?>
+
+<div class="container_16 section clearfix">
+    <?php echo $this->render('_userDetail.phtml'); ?>
+    
+    <div class="grid_12">
+        <div class="pagination">
+            <ul>
+                <li class="active"><a href="#"><i class="icon-edit"></i> Write A Tweet</a></li>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_tweets'); ?>"><i class="icon-check"></i> Their Tweets</a></li>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_following'); ?>"><i class="icon-eye-open"></i> Their Friends</a></li>
+                
+                <?php if((int) $user->favourites_count) : ?>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_faves'); ?>"><i class="icon-heart"></i> Their Favourites</a></li>
+                <?php endif;?>
+            </ul>
+        </div>
+        
+        <div class="grid_12 alpha">
+            <div class="box">
+                <?php echo str_replace(array('{{', '}}', '||'), array('<','>', '"'), $this->form->setAction($this->url())); ?>
+            </div>
+        </div>
+    </div>
+</div>

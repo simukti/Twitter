@@ -1,0 +1,40 @@
+<?php if(count($this->timeline->status)) : ?>
+
+<?php echo $this->render('_pagination.phtml'); ?>
+
+<div class="container_16 clearfix">
+    <?php foreach ($this->timeline as $item ): ?>
+    <?php $user = $item->user; ?>
+
+    <div class="grid_4">
+        <div class="box_tweet" id="<?php echo $item->id; ?>">
+            <?php echo $this->profPict($user->profile_image_url, $user->screen_name); ?>
+            
+            <?php echo $this->tweetDetail($user->name, $user->screen_name, $item->created_at, $item->source); ?>
+            
+            <div class="clearfix"></div>
+            
+            <?php echo $this->tweetMenu($item->id, $user->id, $user->screen_name); ?>
+
+            <p class="tweet_content"><?php echo $this->tweetFilter($item->text); ?></p>
+
+            <?php if($item->in_reply_to_status_id[0]) : ?>
+                <?php echo $this->inReplyTo($item->in_reply_to_status_id, $item->in_reply_to_screen_name); ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <?php endforeach; ?>
+</div>
+
+<?php echo $this->render('_pagination.phtml'); ?>
+
+<?php else: ?>
+<div class="container_16 section clearfix">
+    <div class="grid_16">
+        <div class="box">
+            <?php echo sprintf("<h2 class=\"box_title\">Entity on %s not found.</h2>", $this->url()); ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

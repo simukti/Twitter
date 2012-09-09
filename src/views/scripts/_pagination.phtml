@@ -1,0 +1,16 @@
+<div class="container_16 section clearfix">
+    <div class="grid_16">
+        <div class="pagination">
+            <ul>
+                <li class="disabled"><a href="#">Tweets Page &rarr;</a></li>
+                <?php for($i=1; $i<=20; ++$i):?>
+                    <?php if($this->url() == $this->url(array('page' => $i))) : ?>
+                        <li class="active"><a href="#"><?php echo $i;?></a></li>
+                    <?php else:?>
+                        <li><a href="<?php echo $this->url(array('page' => $i));?>"><?php echo $i;?></a></li>
+                    <?php endif; ?>
+                <?php endfor;?>
+            </ul>
+        </div>
+    </div>
+</div>

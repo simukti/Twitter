@@ -1,0 +1,53 @@
+<div class="container_16 section clearfix">
+    <div class="grid_4"> 
+        <div class="box">
+            <?php $me = $this->me; ?>
+            
+            <?php echo $this->profPict($me->profile_image_url, $me->screen_name); ?>
+
+            <ul class="tweet_detail">
+                <li><a href="<?php echo $this->url(array('screen_name' => $me->screen_name), 'index-show_user');?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $me->name, $me->screen_name)?></a></li>
+                <li><i class="icon-calendar"></i> Join <?php echo date("j/M/Y", strtotime($me->created_at)); ?></li>
+                <li><i class="icon-list-alt"></i> <strong><?php echo $me->followers_count; ?></strong> followers</li>
+                <li><i class="icon-tag"></i> <?php echo $me->friends_count; ?> friends</li>
+            </ul>
+            <div class="clearfix"></div>
+
+            <ul class="tweet_menu">
+                <li><i class="icon-check"></i> <?php echo $me->statuses_count; ?> tweets</li>
+                <li><i class="icon-heart"></i> <?php echo $me->favourites_count; ?> favs</li>
+            </ul>
+
+            <?php if($me->location[0]) : ?>
+            <span style="font-weight: bold; font-size: 90%;display: block;">Location</span> 
+            <p class="tweet_single">
+                <?php echo $me->location; ?>
+            </p>
+            <?php endif;?>
+
+            <?php if($me->description[0]) : ?>
+            <span style="font-weight: bold; font-size: 90%;display: block;">Description</span> 
+            <p class="tweet_single">
+                <?php echo $me->description; ?>
+            </p>
+            <?php endif;?>
+
+            <?php if($me->status->text) :?>
+            <span style="font-weight: bold; font-size: 90%;display: block;">Latest Tweet : <?php echo date("j/M/Y g:i A", strtotime($me->status->created_at)); ?></span>
+            <p class="tweet_single">
+                <?php echo $this->tweetFilter($me->status->text); ?>
+            </p>
+
+            <ul class="tweet_menu">
+                <li><i class="icon-flag"></i> via <?php echo $me->status->source; ?></li>
+            </ul>
+            <?php endif; ?>
+
+        </div>
+    </div>
+    <div class="grid_12">
+        <div class="box">
+            <?php echo str_replace(array('{{', '}}', '||'), array('<','>', '"'), $this->form->setAction($this->url())); ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<?php $user = $this->user; ?>
+
+<div class="container_16 section clearfix">
+    <?php echo $this->render('_userDetail.phtml'); ?>
+    
+    <div class="grid_12">
+        <div class="pagination">
+            <ul>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user'); ?>"><i class="icon-edit"></i> Write A Tweet</a></li>
+                <li class="active"><a href="#"><i class="icon-check"></i> Their Tweets</a></li>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_following'); ?>"><i class="icon-eye-open"></i> Their Friends</a></li>
+                
+                <?php if((int) $user->favourites_count) : ?>
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user_faves'); ?>"><i class="icon-heart"></i> Their Favourites</a></li>
+                <?php endif;?>
+            </ul>
+        </div>
+        
+        <?php foreach ($this->tweets as $item ): ?>
+
+        <div class="grid_4 omega">
+            <div class="box_tweet" id="<?php echo $item->id; ?>">
+                <?php echo $this->profPict($user->profile_image_url, $user->screen_name); ?>
+
+                <?php echo $this->tweetDetail($user->name, $user->screen_name, $item->created_at, $item->source); ?>
+
+                <div class="clearfix"></div>
+
+                <?php echo $this->tweetMenu($item->id, $user->id, $user->screen_name); ?>
+
+                <p class="tweet_content"><?php echo $this->tweetFilter($item->text); ?></p>
+
+                <?php if($item->in_reply_to_status_id[0]) : ?>
+                    <?php echo $this->inReplyTo($item->in_reply_to_status_id, $item->in_reply_to_screen_name); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php endforeach; ?>
+        
+    </div>
+</div>

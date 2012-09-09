@@ -1,0 +1,55 @@
+<?php $me = $this->user; ?>
+
+<div id="<?php echo $me->id; ?>" class="grid_4">
+    <div class="box">
+        <?php echo $this->profPict($me->profile_image_url, $me->screen_name); ?>
+
+        <ul class="tweet_detail">
+            <li><a href="<?php echo $this->url(array('screen_name' => $me->screen_name), 'index-show_user');?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $me->name, $me->screen_name)?></a></li>
+            <li><i class="icon-calendar"></i> Join <?php echo date("j/M/Y", strtotime($me->created_at)); ?></li>
+            <li><i class="icon-list-alt"></i> <strong><?php echo $me->followers_count; ?></strong> followers</li>
+            <li><i class="icon-tag"></i> <?php echo $me->friends_count; ?> friends</li>
+        </ul>
+        <div class="clearfix"></div>
+
+        <ul class="tweet_menu">
+            <li><i class="icon-check"></i> <?php echo $me->statuses_count; ?> tweets</li>
+            <li><i class="icon-heart"></i> <?php echo $me->favourites_count; ?> favs</li>
+        </ul>
+
+        <?php if($me->location[0]) : ?>
+        <span style="font-weight: bold; font-size: 90%;display: block;">Location</span> 
+        <p class="tweet_single">
+            <?php echo $me->location; ?>
+        </p>
+        <?php endif;?>
+
+        <?php if($me->description[0]) : ?>
+        <span style="font-weight: bold; font-size: 90%;display: block;">Description</span> 
+        <p class="tweet_single">
+            <?php echo $this->tweetFilter($me->description); ?>
+        </p>
+        <?php endif;?>
+
+        <span style="font-weight: bold; font-size: 90%;display: block;">Latest Tweet : <?php echo date("j/M/Y g:i A", strtotime($me->status->created_at)); ?></span>
+        <p class="tweet_single">
+            <?php echo $this->tweetFilter($me->status->text); ?>
+        </p>
+            
+        <ul class="tweet_menu">
+            <li><i class="icon-flag"></i> via <?php echo $me->status->source; ?></li>
+        </ul>
+        
+        <?php if(Service_Twitter::getInstance()->getTwitter()->getUsername() != $me->screen_name) : ?>
+            <?php if(strtolower($me->following) !== 'true') : ?>
+                <ul class="tweet_menu">
+                    <li><a href="<?php echo $this->url(array('id_user' => $me->id, 'token' => md5($this->twitterOption('consumer_key') . $me->id)), 'index-friendship_create'); ?>"><i class="icon-plus-sign"></i> Follow This User</a></li>
+                </ul>
+            <?php else: ?>
+                <ul class="tweet_menu">
+                    <li><a href="<?php echo $this->url(array('id_user' => $me->id, 'token' => md5($this->twitterOption('consumer_key') . $me->id)), 'index-friendship_destroy'); ?>"><i class="icon-minus-sign"></i> UnFollow @<?php echo $me->screen_name; ?></a></li>
+                </ul>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</div>

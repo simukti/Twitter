@@ -1,0 +1,36 @@
+<?php $item = $this->tweet; ?>
+<?php $user = $item->user; ?>
+
+<div class="container_16 section clearfix">
+    <div class="grid_10 prefix_3">
+        <div id="<?php echo $item->id; ?>" class="box">
+            
+            <ul class="tweet_menu menu_large" style="padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px dashed #ddd;">
+                <li><a href="<?php echo $this->url(array('screen_name' => $user->screen_name), 'index-show_user'); ?>"><i class="icon-user"></i> <?php echo sprintf("%s (@%s)", $user->name, $user->screen_name); ?></a></li>
+                <span style="float:right;">
+                    <li><i class="icon-calendar"></i> <?php echo date("j/M/Y g:i A", strtotime($item->created_at)); ?></li>
+                </span>
+            </ul>
+            
+            <?php echo $this->profPict($user->profile_image_url, $user->screen_name); ?>
+            
+            <h1 class="tweet_single tweet_content tweet_zoom"><?php echo $this->tweetFilter($item->text); ?></h1>
+            
+            <div class="clearfix"></div>
+            
+            <!-- this is special.. im not using view helper for this tweet_show view script -->
+            <ul class="tweet_menu menu_large">
+                <?php if($item->in_reply_to_status_id[0]) : ?>
+                    <?php $reply_url = $this->url(array('id' => $item->in_reply_to_status_id), 'tweet-show'); ?>
+                    <?php echo sprintf("<li><a href=\"%s\"><i class=\"icon-share\"></i> In Reply-To: @%s</a></li>", $reply_url, $item->in_reply_to_screen_name); ?>
+                <?php endif; ?>
+                
+                <li><i class="icon-flag"></i> via <strong> <?php echo $item->source; ?></strong></li>
+                <span>
+                    <li><a href="<?php echo $this->url(array('id' => $item->id), 'tweet-reply'); ?>"><i class="icon-edit"></i> Reply This Tweet</a></li>
+                    <li><a href="<?php echo $this->url(array('id_user' => $user->id), 'dm-write'); ?>"><i class="icon-envelope"></i> Send DM To @<?php echo $user->screen_name;?></a></li>
+                </span>
+            </ul>
+        </div>
+    </div>
+</div>
