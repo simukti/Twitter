@@ -6,11 +6,6 @@
  */
 class OauthController extends Twitter_BaseController
 {
-    public function init()
-    {
-        $this->_helper->viewRenderer->setNoRender(true);
-    }
-    
     public function indexAction()
     {
         if($this->getTwitter()->isAuthorised()) {
@@ -21,6 +16,8 @@ class OauthController extends Twitter_BaseController
     
     public function loginAction()
     {
+        $this->_helper->viewRenderer->setNoRender(true);
+        
         $twitter = $this->getTwitter();
         $session = $this->getSession();
         
@@ -34,6 +31,7 @@ class OauthController extends Twitter_BaseController
     
     public function logoutAction()
     {
+        $this->_helper->viewRenderer->setNoRender(true);
         $this->getSession()->unsetAll();
         Zend_Session::forgetMe();
         $this->_helper->redirector->gotoRouteAndExit(array(), 'oauth-index');
@@ -41,6 +39,8 @@ class OauthController extends Twitter_BaseController
     
     public function callbackAction()
     {
+        $this->_helper->viewRenderer->setNoRender(true);
+        
         $twitter = $this->getTwitter();
         $session = $this->getSession();
         

@@ -4,15 +4,8 @@
  *
  * @author Sarjono Mukti Aji <me@simukti.net>
  */
-class IndexController extends Twitter_BaseController
+class IndexController extends Twitter_UserController
 {
-    public function init()
-    {
-        if(! $this->getTwitter()->isAuthorised()) {
-            $this->_helper->redirector->gotoRouteAndExit(array(), 'oauth-index');
-        }
-    }
-    
     public function indexAction()
     {
         $this->view->navigation()->findById('timeline')->setActive();

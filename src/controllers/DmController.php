@@ -4,15 +4,8 @@
  *
  * @author Sarjono Mukti Aji <me@simukti.net>
  */
-class DmController extends Twitter_BaseController
+class DmController extends Twitter_UserController
 {
-    public function init()
-    {
-        if(! $this->getTwitter()->isAuthorised()) {
-            $this->_helper->redirector->gotoRouteAndExit(array(), 'oauth-index');
-        }
-    }
-    
     public function indexAction()
     {
         $page = $this->_getParam('page');
